@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-l+5h#)cdp2#(a#+@hq_zxx!*9$3d)h&@7o+!tmws1b=o$&tz)=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['taksly-we6z.onrender.com',
+    'localhost',
+    '127.0.0.1',]
 
 
 # Application definition
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -116,6 +119,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOTS = [BASE_DIR / 'staticfiles']
+ALLOWED_HOSTS = [
+    'royal-we6z.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Email

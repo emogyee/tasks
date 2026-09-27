@@ -26,11 +26,8 @@ SECRET_KEY = 'django-insecure-l+5h#)cdp2#(a#+@hq_zxx!*9$3d)h&@7o+!tmws1b=o$&tz)=
 DEBUG = True
 
 # Whitelist your active tasks application domain alongside local testing URLs
-ALLOWED_HOSTS = [
-    'tasks-71wz.onrender.com',
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['tasks-71wz.onrender.com', '127.0.0.1', 'localhost']
+
 
 
 

@@ -1,32 +1,127 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>My Tasks</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User | My Tasks</title>
+    <link
+      rel="shortcut icon"
+      href="{% static 'image/favicon.png' %}"
+      type="image/x-icon"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body class="task-list">
+    <nav>
+      <div class="task-list-title">
+        <h1>Welcome {{request.user.username}}
 
-    <a href="{% url 'create_task' %}"> Add Task</a>
-    <hr>
+        </h1>
+        <p>Organize your work and get things done</p>
+      </div>
 
-    
-    {% for task in tasks  %}
-    <h3>{{task.title}}</h3>
-    <p>{{task.description}}</p>
-    
-    {% if task.completed %}
-    <strong>Completed</strong>
-    {% else %}
-    <strong>Pending</strong>  
-    <a href="{% url 'complete_task' task.id %}">Complete</a>      
-    {% endif %}
-        
-    <hr>
-    {%empty%}
-    <p>No task yet</p>   
-    {% endfor %}
-        
-</body>
+      <a class="add-task-button" href="{% url 'tasks:create_task' %}">
+        <span aria-hidden="true">+</span> Add New Task
+      </a>
+    </nav>
+
+    <main>
+      <header class="task-list-intro">
+        <div>
+          <h2>Your Task List</h2>
+          <p>Manage and track all your tasks in one place</p>
+        </div>
+        <span class="task-count">
+          {{ tasks|length }} Task{{ tasks|length|pluralize }}
+        </span>
+      </header>
+
+      <div class="task-table-wrap">
+        <table class="table task-table">
+          <thead>
+            <tr>
+              <th class="task-number" scope="col">#</th>
+              <th scope="col">Task Details</th>
+              <th scope="col">Priority</th>
+              <th scope="col">Status</th>
+              <th scope="col">Due Date</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <th class="task-number" scope="row">{{ forloop.counter }}</th>
+              <td class="task-details">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+              </td>
+              <td>
+                <span class="priority">{{ task.get_priority_display }}</span>
+              </td>
+              <td>
+                <span class="status">{{ task.get_status_display }}</span>
+              </td>
+              <td>
+                <span class="due-date">
+                  {% if task.due_date %}
+                    {{ task.due_date|date:"F j, Y" }}
+                  {% else %}
+                    No due date
+                  {% endif %}
+                </span>
+              </td>
+              <td class="task-actions">
+                {% if task.status == 'pending' %}
+                <form
+                  action="{% url 'tasks:complete_task' task.id %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="complete-button">Complete</button>
+                </form>
+                {% endif %}
+
+                <form
+                  action="{% url 'tasks:delete_task' task.id %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <button
+                    class="delete-button"
+                    type="submit"
+                    onclick="return confirm('Delete this task?');"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td class="empty-tasks" colspan="6">No tasks yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="task-list-footer">
+        Showing {{ tasks|length }} task{{ tasks|length|pluralize }}.
+      </p>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

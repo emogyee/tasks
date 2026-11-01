@@ -1,40 +1,70 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Create Account</h1>
+  <head>
+    <meta charset="UTF-8" />
 
-    <form method="POST">
-        {% csrf_token %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        
-        <label for="username">Username</label>
-        <input type="text" name='username'>
+    <title>Takly | Register</title>
 
+    <link
+      rel="shortcut icon"
+      href="{% static 'image/favicon.png' %}"
+      type="image/x-icon"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body class="register">
+    <div class="reg-div">
+      <div class="login">
+        <h1>Create Account</h1>
         <br><br>
 
+        <form method="POST">
+          {% csrf_token %}
 
-        <label for="email">Email</label>
-        <input type="email" name='email'>
+          <!-- <label for="username">Username</label><br /> -->
 
+          <input type="text" name="username" id="username" placeholder="Username" required />
+
+          <br /><br />
+
+          <!-- <label for="email">Email</label><br /> -->
+
+          <input type="email" name="email" id="email" placeholder="Email" value="{{ request.GET.email }}" required />
+
+          <br /><br />
+
+          <!-- <label for="password">Password</label><br /> -->
+
+          <input type="password" name="password" id="password" placeholder="Password" required />
+
+          <br /><br />
+          <br>
+
+          <button type="submit">Register</button>
+        </form>
         <br><br>
 
+        <p>
+          Already have an account?
 
-        <label for="password">Password</label>
-        <input type="password" name='password'>
-
-
-        <br><br>
-
-
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account?
-        <a href="{% url 'login' %}">Login</a>
-    </p>
-</body>
+          <a href="{% url 'tasks:login' %}"> Login </a>
+        </p>
+      </div>
+    </div>
+     <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

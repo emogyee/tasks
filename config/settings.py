@@ -33,12 +33,12 @@ DEBUG = True
 
 # FIX 1: Whitelist your active tasks application domain exclusively (Removed duplicate at bottom)
 ALLOWED_HOSTS = [
-    'tasks-71wz.onrender.com', 
-    '127.0.0.1', 
-    'localhost'
+    'tasksly.onrender.com',
+    'tasks-71wz.onrender.com',
+    '.onrender.com',
+    '127.0.0.1',
+    'localhost',
 ]
-
-
 # Application definition
 
 INSTALLED_APPS = [
